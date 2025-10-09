@@ -1,0 +1,24 @@
+public class NewClass {
+
+    public static int getLargest(int arr[], int sz) {
+        int iterate1 = 0;          // O(1) space
+        int iterate2 = 0;          // O(1) space
+        int largest  = 0;          // O(1) space
+
+        while (iterate1 < sz - 1) {        // Θ(n^2) 
+            iterate2++;                     // O(1)
+
+            if (iterate2 == sz) {           // O(1)
+                iterate1++;                 // O(1)
+                iterate2 = iterate1;        // O(1)
+                continue;                   // O(1)
+            }
+
+            int product = arr[iterate1] * arr[iterate2]; // O(1) per pair
+            if (product > largest)                        // O(1)
+                largest = product;                        // O(1)
+        }
+
+        return largest;                    // T Θ(n^2) and Space: O(1)
+    }
+}
