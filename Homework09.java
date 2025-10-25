@@ -53,7 +53,7 @@ What is the value of the first triangle number to have over one hundred divisors
         }
 
         public static void main(String[] args) {
-            System.out.println(divisorCount(40));
+            System.out.println(divisorCount(100));
         }
     }
 
