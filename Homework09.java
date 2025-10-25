@@ -7,7 +7,10 @@
  *
  * @author MoaathAlrajab
  */
-public class Homework09 {
+
+import java.util.Scanner;
+
+ public class Homework09 {
 
     // ToDo 01:  Write an algorithm to solve the following problem
     /*
@@ -53,7 +56,11 @@ What is the value of the first triangle number to have over one hundred divisors
         }
 
         public static void main(String[] args) {
-            System.out.println(divisorCount(100));
+            
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("What is your target divisor?");
+            int target = scanner.nextInt();
+            System.out.println(divisorCount(target));
         }
     }
 
