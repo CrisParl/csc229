@@ -1,0 +1,106 @@
+import java.util.Stack;
+import java.util.Scanner;
+
+class Evaluate {
+
+    public static double evaluate(String s) {
+        Stack<String> ops = new Stack<>();   
+        Stack<Double> vals = new Stack<>();   
+
+        String[] evals = s.trim().split("\\s+");
+
+        for (String str : evals) {
+
+            if (str.equals("(")) {
+                // ignore
+
+            } else if (str.equals("+") || str.equals("-") || str.equals("*") || str.equals("/") || str.equals("sqrt")) {
+
+                ops.push(str);
+
+            } else if (str.equals(")")) {
+
+                String op = ops.pop();
+
+                if (op.equals("sqrt")) {
+                    double v = vals.pop();
+                    vals.push(Math.sqrt(v));
+                } else {
+                    double v2 = vals.pop();  
+                    double v1 = vals.pop();  
+                    double result;
+
+                    switch (op) {
+                        case "+": result = v1 + v2; break;
+                        case "-": result = v1 - v2; break;
+                        case "*": result = v1 * v2; break;
+                        case "/": result = v1 / v2; break;
+                        default:
+                            throw new IllegalArgumentException("Unknown operator: " + op);
+                    }
+
+                    vals.push(result);
+                }
+
+            } else {
+                double value = Double.parseDouble(str);
+                vals.push(value);
+            }
+        }
+
+        return vals.pop();
+    }
+
+    public static void main(String[] args) {
+        String expr1 = "( 1 + ( ( 2 - 3 ) * ( 14 * 5 ) ) )";
+        System.out.println(evaluate(expr1)); 
+
+        String expr2 = "( ( 1 + sqrt ( 5 ) ) / 2.0 )";
+        System.out.println(evaluate(expr2));  
+    }
+}
+
+public class ParenMatch {
+    public static void main(String[] args) {
+        Stack s = new Stack();
+        String line;
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("\nParenthesis Matching");
+        System.out.print("Enter a parenthesized expression: ");
+        line = scan.nextLine();
+
+        boolean error = false;
+        boolean tooManyRight = false;
+        int errorPos = -1;
+
+        for (int i = 0; i < line.length(); i++) {
+            char ch = line.charAt(i);
+
+            if (ch == '(') {
+                s.push(ch);
+            } else if (ch == ')') {
+                if (s.empty()) {
+                    error = true;
+                    tooManyRight = true;
+                    errorPos = i;
+                    break;
+                } else {
+                    s.pop();
+                }
+            }
+        }
+
+        if (error) {
+            System.out.println("Too many right parentheses.");
+            System.out.println(line.substring(0, errorPos + 1));
+        } else if (!s.empty()) {
+            System.out.println("Too many left parentheses.");
+            System.out.println("Error detected at end of line:");
+            System.out.println(line);
+        } else {
+            System.out.println("\nThe parentheses match.");
+            System.out.println(line);
+        }
+    }
+}
